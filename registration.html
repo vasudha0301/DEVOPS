@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: darkgreen;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        .success {
+            color: green;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Event Registration</h2>
+
+    <form id="regForm">
+
+        <label>Full Name</label>
+        <input type="text" id="name">
+        <div class="error" id="nameError"></div>
+
+        <label>Phone Number</label>
+        <input type="text" id="phone" maxlength="10">
+        <div class="error" id="phoneError"></div>
+
+        <label>Select Event</label>
+        <select id="event">
+            <option value="">-- Select Event --</option>
+            <option>Technical Workshop</option>
+            <option>Hackathon</option>
+            <option>Coding Contest</option>
+            <option>Seminar</option>
+        </select>
+        <div class="error" id="eventError"></div>
+
+        <button type="submit">Register</button>
+
+    </form>
+
+    <div class="success" id="successMsg"></div>
+</div>
+
+<script>
+
+document.getElementById("regForm").addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    // Clear previous messages
+    document.getElementById("nameError").innerHTML="";
+    document.getElementById("phoneError").innerHTML="";
+    document.getElementById("eventError").innerHTML="";
+    document.getElementById("successMsg").innerHTML="";
+
+    let name=document.getElementById("name").value.trim();
+    let phone=document.getElementById("phone").value.trim();
+    let event=document.getElementById("event").value;
+
+    let valid=true;
+
+    // Name Validation
+    if(name==""){
+        document.getElementById("nameError").innerHTML="Enter your full name";
+        valid=false;
+    }
+    else if(!/^[A-Za-z ]+$/.test(name)){
+        document.getElementById("nameError").innerHTML="Only letters and spaces allowed";
+        valid=false;
+    }
+
+    // Phone Validation
+    if(phone==""){
+        document.getElementById("phoneError").innerHTML="Enter phone number";
+        valid=false;
+    }
+    else if(!/^[0-9]{10}$/.test(phone)){
+        document.getElementById("phoneError").innerHTML="Phone number must contain exactly 10 digits";
+        valid=false;
+    }
+
+    // Event Validation
+    if(event==""){
+        document.getElementById("eventError").innerHTML="Please select an event";
+        valid=false;
+    }
+
+    // Success
+    if(valid){
+        document.getElementById("successMsg").innerHTML=
+        "Registration Successful!<br><br>" +
+        "<b>Name:</b> "+name+"<br>" +
+        "<b>Phone:</b> "+phone+"<br>" +
+        "<b>Event:</b> "+event;
+
+        document.getElementById("regForm").reset();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
